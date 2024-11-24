@@ -1,0 +1,20 @@
+services:
+  web:
+    image: nginx
+    ports:
+     - "80:80"
+    volumes:
+    - ./:/usr/share/nginx/html
+    environment:
+    - NGINX_PORT=80
+  ngrok:
+    image: ngrok/ngrok:latest
+    env_file:
+      - .env
+    command:
+      - "http"
+      - "http://host.docker.internal:80"
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    ports:
+      - 4040:4040
